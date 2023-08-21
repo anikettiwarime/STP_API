@@ -1,9 +1,10 @@
-import os
 import uuid
-from users.models import User
+
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+
+from auth_users.models import User
 
 
 # Create your models here.
@@ -21,7 +22,7 @@ class Standard(models.Model):
         super().save(*args, **kwargs)
 
 
-class Subject(models.Model):    
+class Subject(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     name = models.CharField(max_length=100)
     slug = models.SlugField(null=True, blank=True)
@@ -111,7 +112,7 @@ class SlotSubject(models.Model):
 class Comment(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     lesson_name = models.ForeignKey(
-        Lesson, null=True, on_delete=models.CASCADE, related_name='lessoncomments')
+        Lesson, null=True, on_delete=models.CASCADE, related_name='lesson_comments')
     comm_name = models.CharField(max_length=100, blank=True)
     # reply = models.ForeignKey("Comment", null=True, blank=True, on_delete=models.CASCADE,related_name='replies')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -157,3 +158,16 @@ class Event(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+
+# FeedBack :  name email feedback
+class Feedback(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True,
+                          primary_key=True, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    name = models.CharField(max_length=150)
+    email = models.CharField(max_length=150)
+    feedback = models.TextField()
+
+    def __str__(self):
+        return self.name

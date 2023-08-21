@@ -1,5 +1,7 @@
 from django.contrib import admin
-from curriculum.models import Standard, Subject, Lesson, WorkingDay, TimeSlot, SlotSubject, Comment, Reply, Event
+
+from curriculum.models import Standard, Subject, Lesson, WorkingDay, TimeSlot, SlotSubject, Comment, Reply, Event, \
+    Feedback
 
 # Register your models here.
 admin.site.register(Standard)
@@ -11,3 +13,4 @@ admin.site.register(SlotSubject)
 admin.site.register(Comment)
 admin.site.register(Reply)
 admin.site.register(Event)
+admin.site.register(Feedback)

@@ -1,37 +1,26 @@
 from django.urls import path, include
-from rest_framework import routers
-from .views import UserRegistrationView, UserLoginView, UserListViewSet, UserViewSet, FeedbackViewSet, StandardViewSet, SubjectViewSet, LessonViewSet, WorkingDayViewSet, TimeSlotViewSet, SlotSubjectViewSet, CommentViewSet, ReplyViewSet, EventViewSet
+from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+from .auth_views import MyTokenObtainPairView, RegistrationView
+from .curriculum_views import *
 
-
-# urlpatterns = [
-#     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-#     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-# ]
-
-router = routers.DefaultRouter()
-router.register(r'regiter',UserRegistrationView,basename='registration')
-router.register(r'users', UserListViewSet, basename="users")
-router.register(r'user', UserViewSet, basename="user")
-router.register(r'feedbacks', FeedbackViewSet, basename='feedbacks')
-router.register(r'standards', StandardViewSet, basename='standards')
-router.register(r'subjects', SubjectViewSet, basename='subjects')
-router.register(r'lessons', LessonViewSet, basename='lessons')
-router.register(r'workingday', WorkingDayViewSet, basename='workingday')
-router.register(r'timeslot', TimeSlotViewSet, basename='timeslot')
-router.register(r'slotsubject', SlotSubjectViewSet, basename='slotsubject')
-router.register(r'comment', CommentViewSet, basename='comment')
-router.register(r'reply', ReplyViewSet, basename='reply')
-router.register(r'event', EventViewSet, basename='event')
+router = DefaultRouter()
+router.register(r'standards', StandardViewSet)
+router.register(r'subjects', SubjectViewSet)
+router.register(r'lessons', LessonViewSet)
+router.register(r'working-days', WorkingDayViewSet)
+router.register(r'time-slots', TimeSlotViewSet)
+router.register(r'slot-subjects', SlotSubjectViewSet)
+router.register(r'comments', CommentViewSet)
+router.register(r'replies', ReplyViewSet)
+router.register(r'events', EventViewSet)
+router.register(r'feedbacks', FeedBackViewSet)
 
 urlpatterns = [
-    path('users/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('users/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path("register/", UserRegistrationView.as_view()),
-    path("login/", UserLoginView.as_view()),
-    path("", include(router.urls)),
+    path('', include(router.urls)),
+
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegistrationView.as_view(), name='register'),
 ]
