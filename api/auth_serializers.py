@@ -35,3 +35,9 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError('Incorrect password.')
 
         return data
+
+
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

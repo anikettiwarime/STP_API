@@ -55,6 +55,6 @@ class FeedBackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
-    def get_queryset(self):
-        user = self.request.user
-        return Feedback.objects.filter(user=user)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return Feedback.objects.filter(user=user)

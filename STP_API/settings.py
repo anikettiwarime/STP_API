@@ -26,7 +26,7 @@ SECRET_KEY = '@#+n3du^2ypt1k2lbnq&lnk=qrvlftsrpxueoj0)qh@b=*g@z$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'anikettiwari.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', 'anikettiwari.pythonanywhere.com', '127.0.0.1', '.stp.anikettiwari.tech', '.vercel.app']
 
 # Application definition
 
@@ -66,7 +66,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
