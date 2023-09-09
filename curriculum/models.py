@@ -1,9 +1,10 @@
 import uuid
+from decouple import config
 
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
-
+from cloudinary.models import CloudinaryField
 from auth_users.models import User
 
 
@@ -148,13 +149,17 @@ class Event(models.Model):
     name = models.CharField(max_length=100, unique=True)
     Ondate = models.DateField()
     posted_on = models.DateTimeField(auto_now=True)
-    event_image = models.ImageField(
-        upload_to='Events/Images/', verbose_name="Event Image")
+    image = CloudinaryField("image")
     description = models.TextField(max_length=500, blank=True)
 
     def __str__(self):
         return self.description
 
+    @property
+    def image_url(self):
+        return (
+            f"https://res.cloudinary.com/{config('CLOUDINARY_CLOUD_NAME')}/{self.image}"
+        )
 
 
 # FeedBack :  name email feedback

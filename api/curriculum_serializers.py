@@ -69,9 +69,18 @@ class ReplySerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
+    image_url = serializers.ReadOnlyField()
+
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ["id", "name", "image_url", "image", "Ondate", "posted_on", "description"]
+
+        def to_representation(self, instance):
+            representation = super().to_representation(instance)
+            representation.pop("image")
+
+            return representation
+
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
